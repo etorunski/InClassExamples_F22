@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">InClassExamples_F22</string>
-    <string name="text_message"> Hello World </string>
+    <string name="text_message">Bonjour au français</string>
 </resources>

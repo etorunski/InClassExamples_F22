@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">InClassExamples_F22</string>
+    <string name="text_message">Bonjour à tous</string>
+</resources>
+
+    <!-- values-fr-rBE   first spot to look  -->
+    <!-- values-es   second spot to look  -->
+    <!-- values   third spot to look  -->

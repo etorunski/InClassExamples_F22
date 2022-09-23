@@ -6,5 +6,5 @@ import androidx.lifecycle.ViewModel;
 public class MainActivityViewModel extends ViewModel {
 
     //survive orientation changes
-    public MutableLiveData< boolean > isOn = new MutableLiveData<boolean>();
+    public MutableLiveData< Boolean > isSelected = new MutableLiveData<>();
 }

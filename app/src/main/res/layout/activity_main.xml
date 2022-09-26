@@ -25,4 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Switch" />
+
+
+    <ImageButton android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/anImage"
+        android:src="@drawable/logo_algonquin"
+        />
+
+
+
 </LinearLayout>

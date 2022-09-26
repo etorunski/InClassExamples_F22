@@ -3,6 +3,7 @@ package com.example.torunse;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,11 +41,23 @@ public class MainActivity extends AppCompatActivity {
             model.isSelected.postValue(isChecked);
         } );
 
+        variableBinding.anImage.setOnClickListener(click ->
+                Toast.makeText(this, "You clicked on the image", Toast.LENGTH_LONG).show()
+                );
+
 
         model.isSelected.observe(this, selected -> {
                     variableBinding.checkBox.setChecked(selected);
                     variableBinding.radioButton.setChecked(selected);
                     variableBinding.switch1.setChecked(selected);
+
+
+            Context context = getApplicationContext();
+            CharSequence text = "You clicked the value and it is now:" +selected;
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
                 });
 
         setContentView( variableBinding.getRoot()); //this shows the objects on screen

@@ -6,7 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+
+
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
+
+
+
+    >
 
     <Button
         android:id="@+id/button3"
@@ -14,7 +24,13 @@
         android:layout_height="wrap_content"
         android:text="button 1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:nextFocusUp="@id/switch2"
+        android:nextFocusDown="@id/checkBox2"
+        android:nextFocusRight="@id/radioButton2"
+        android:nextFocusLeft="@id/button3"
+        />
 
     <Button
         android:id="@+id/button"
@@ -32,7 +48,14 @@
         android:layout_marginStart="150dp"
         android:text="Switch"
         app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        android:nextFocusUp="@id/button3"
+        android:nextFocusDown="@id/button3"
+        android:nextFocusRight="@id/button3"
+        android:nextFocusLeft="@id/button3"
+        />
 
     <RadioButton
         android:id="@+id/radioButton2"

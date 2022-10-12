@@ -3,4 +3,6 @@
     <string name="text_message"> Hello World </string>
     <string name="second">Second string</string>
     <string name="third">Third string</string>
+    <string name="send">send</string>
+    <string name="receive">Receive</string>
 </resources>

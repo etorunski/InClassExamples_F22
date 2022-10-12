@@ -20,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     MainActivityViewModel model;
 
+    /** This is the starting point
+     *
+     * @param savedInstanceState THe state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         model =  new ViewModelProvider(this).get(MainActivityViewModel.class);
-
         variableBinding = ActivityMainBinding.inflate( getLayoutInflater() ); //will load my premade variables from ViewBinding
 
         variableBinding.checkBox.setOnCheckedChangeListener(   (button, isChecked) -> {

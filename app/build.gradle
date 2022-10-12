@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     buildFeatures {
         viewBinding true
@@ -32,9 +32,24 @@ android {
     buildToolsVersion '33.0.0'
 }
 
-dependencies {
+android.applicationVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
 
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+        source = variant.javaCompile.source
+        destinationDir = file("$rootDir/javadoc/")
+        failOnError false
+
+        doFirst {
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+            options.addStringOption "-show-members", "package"
+        }
+    }}
+
+dependencies {
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'

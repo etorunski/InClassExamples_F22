@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">InClassExamples_F22</string>
-    <string name="button_text">I\'m a button</string>
+    <string name="button_text">Login</string>
 </resources>

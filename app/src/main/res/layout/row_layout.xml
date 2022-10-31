@@ -3,16 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondActivity">
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/backButton"
+    <TextView
+        android:textSize="30dp"
+        android:id="@+id/messageId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Welcome to page 2"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Text goes here"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time goes here"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

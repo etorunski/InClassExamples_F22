@@ -11,12 +11,12 @@ import java.util.List;
 public interface ChatMessageDAO {
 
     @Insert
-    public void insertMessage(ChatRoom.ChatMessage m);
+    public void insertMessage(ChatMessage m);
 
                         //This matches the @Entity class name
     @Query("Select * from ChatMessage;")
-    public List<ChatRoom.ChatMessage> getAllMessages();
+    public List<ChatMessage> getAllMessages();
 
     @Delete
-    public void deleteMessage(ChatRoom.ChatMessage m);
+    public void deleteMessage(ChatMessage m);
 }

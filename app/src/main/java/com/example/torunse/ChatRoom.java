@@ -1,6 +1,7 @@
 package com.example.torunse;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.example.torunse.data.ChatRoomViewModel;
 import com.example.torunse.data.MainActivityViewModel;
 import com.example.torunse.databinding.ActivityChatRoomBinding;
 import com.example.torunse.databinding.SentMessageBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -40,21 +42,16 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //load from the database:
-        MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "MessageDatabase").build();
-        mDAO = db.cmDAO();
-
-
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
 
-
-
         messages = chatModel.messages.getValue();
 
-
+        //load from the database:
+        MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "MessageDatabase").build();
+        mDAO = db.cmDAO();
 
         if(messages == null)
         {
@@ -67,23 +64,29 @@ public class ChatRoom extends AppCompatActivity {
 
                 messages.addAll( mDAO.getAllMessages() );
                 //now you can load the RecyclerVIew:
-                binding.recycleView.setAdapter( myAdapter );
+
+                runOnUiThread(() ->{
+                    binding.recycleView.setAdapter( myAdapter );
+                });
+
             }  );
-
-
         }
-
 
         binding.sendButton.setOnClickListener(click -> {
 
             ChatMessage newMessage = new ChatMessage();
-            newMessage.message =  binding.textInput.getText().toString();
+            newMessage.setMessage( binding.textInput.getText().toString() );
 
             chatModel.messages.getValue().add(newMessage);
 
             myAdapter.notifyItemInserted( messages.size()-1 );
             //clear the previous text:
             binding.textInput.setText("");
+
+            Executor thread = Executors.newSingleThreadExecutor();
+            thread.execute( () -> {
+                mDAO.insertMessage(newMessage);
+            });
         });
 
         //Set a layout manager for the rows to be aligned vertically using only 1 column.
@@ -121,31 +124,49 @@ public class ChatRoom extends AppCompatActivity {
 
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(click ->{
+
+                //which row was click
+                int position = getAdapterPosition();
+               ChatMessage thisMessage = messages.get(position);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
+                builder.setMessage(  thisMessage.message );
+
+                builder.setTitle("Do you want to delete this? ");
+
+                builder.setNegativeButton("No", (a, b)->{   });
+                builder.setPositiveButton("Yes", (a, b)->{
+
+                    Snackbar.make( messageText, "You deleted position #" + position, Snackbar.LENGTH_LONG)
+                            .setAction( "Undo", click1-> {
+
+                                Executor thread = Executors.newSingleThreadExecutor();
+                                thread.execute( () -> {
+                                    mDAO.insertMessage(thisMessage);
+                                });
+                                chatModel.messages.getValue().add(thisMessage);
+                                myAdapter.notifyItemInserted( position );
+
+                            } )  .show();
+
+                    Executor thread = Executors.newSingleThreadExecutor();
+                    thread.execute( () -> {
+                        mDAO.deleteMessage(thisMessage);
+                    });
+
+                    myAdapter.notifyItemRemoved( position );
+                    chatModel.messages.getValue().remove(position);
+
+                });
+                builder.create().show();
+            });
+
             messageText = itemView.findViewById(R.id.messageText);
             timeText = itemView.findViewById(R.id.timeText);
         }
     }
 
 
-    @Entity
-    public class ChatMessage{
-
-        @PrimaryKey
-        public int id;
-
-
-        @ColumnInfo(name="MessageColumn")
-        public String message;
-
-
-
-
-        public ChatMessage(){
-
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
 }

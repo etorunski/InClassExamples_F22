@@ -65,9 +65,7 @@ public class ChatRoom extends AppCompatActivity {
                 messages.addAll( mDAO.getAllMessages() );
                 //now you can load the RecyclerVIew:
 
-                runOnUiThread(() ->{
-                    binding.recycleView.setAdapter( myAdapter );
-                });
+                runOnUiThread(() -> binding.recycleView.setAdapter( myAdapter ) );
 
             }  );
         }
@@ -104,6 +102,7 @@ public class ChatRoom extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.messageText.setText(messages.get(position).getMessage() );
                 holder.timeText.setText("");
+
             }
 
             @Override
@@ -139,7 +138,7 @@ public class ChatRoom extends AppCompatActivity {
                 builder.setNegativeButton("No", (a, b)->{   });
                 builder.setPositiveButton("Yes", (a, b)->{
 
-                    Snackbar.make( messageText, "You deleted position #" + position, Snackbar.LENGTH_LONG)
+                    Snackbar.make( messageText, "You deleted position #" + position, Snackbar.LENGTH_INDEFINITE)
                             .setAction( "Undo", click1-> {
 
                                 Executor thread = Executors.newSingleThreadExecutor();

@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
         //loads the XML file on Screen:
         setContentView(R.layout.activity_main);
         lButton = findViewById(R.id.button2);
-         loginText = findViewById(R.id.editText);
+        loginText = findViewById(R.id.editText);
 
-         TextView tv = findViewById(R.id.theText);
+        TextView tv = findViewById(R.id.theText);
 
-         lButton.setOnClickListener( click ->
-                 tv.setText("You clicked the button")
-                 );
+        lButton.setOnClickListener( click ->
+                tv.setText("You clicked the button")
+        );
 
         stringHas123(loginText.getText().toString());
     }
